@@ -52,6 +52,7 @@ import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.web.l10n.LocaleService;
 
 /**
  * This class represents a NotifyGru marker provider for the Resubmit Form task
@@ -111,12 +112,7 @@ public class CompleteFormResponseMarkerProvider implements IMarkerProvider
     public Collection<InfoMarker> provideMarkerValues( ResourceHistory resourceHistory, ITask task, HttpServletRequest request )
     {
         List<InfoMarker> listMarkers = new ArrayList<>( );
-
-        Locale locale = Locale.getDefault( );
-        if ( request != null )
-        {
-            locale = request.getLocale( );
-        }
+        Locale locale = LocaleService.getContextUserLocale( request );
 
         for ( ITask taskOther : _taskService.getListTaskByIdAction( resourceHistory.getAction( ).getId( ), locale ) )
         {
